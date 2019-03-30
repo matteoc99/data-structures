@@ -1,20 +1,20 @@
 package algorithms;
 
-import data_structures.graphs.Graph;
-import data_structures.graphs.Node;
-import data_structures.graphs.Path;
-import data_structures.graphs.Step;
+import data_structures.MinHeap;
+import data_structures.graphs.*;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
 public class Graphs {
     public static Path DFS(Graph graph, int fromId, int toId) {
-        Path ret = new Path();
-        Stack<Node> stack = new Stack<>();
-        ArrayList<Node> visited = new ArrayList<>();
         Node to = graph.getNodeById(toId);
         Node from = graph.getNodeById(fromId);
+        Path ret = new Path(from,to);
+
+        Stack<Node> stack = new Stack<>();
+        ArrayList<Node> visited = new ArrayList<>();
+
         stack.add(from);
 
         while (!stack.empty()) {
@@ -38,11 +38,12 @@ public class Graphs {
     }
 
     public static boolean isReachableWithBFS(Graph graph, int fromId, int toId) {
-        Path ret = new Path();
-        ArrayList<Node> queue = new ArrayList<>();
-        ArrayList<Node> visited = new ArrayList<>();
         Node to = graph.getNodeById(toId);
         Node from = graph.getNodeById(fromId);
+
+        ArrayList<Node> queue = new ArrayList<>();
+        ArrayList<Node> visited = new ArrayList<>();
+
         queue.add(from);
 
         while (!queue.isEmpty()) {
@@ -65,11 +66,12 @@ public class Graphs {
 
 
     public static Path BFS(Graph graph, int fromId, int toId) {
-        Path ret = new Path();
-        ArrayList<Node> queue = new ArrayList<>();
-        ArrayList<Node> visited = new ArrayList<>();
         Node to = graph.getNodeById(toId);
         Node from = graph.getNodeById(fromId);
+        Path ret = new Path(from,to);
+        ArrayList<Node> queue = new ArrayList<>();
+        ArrayList<Node> visited = new ArrayList<>();
+
         queue.add(from);
 
         while (!queue.isEmpty()) {
@@ -91,22 +93,41 @@ public class Graphs {
     }
 
     public static Path dijkstra(Graph graph, int fromId, int toId) {
-        Path ret = new Path();
-        ArrayList<Node> visited = new ArrayList<>();
-        ArrayList<Node> unvisited= new ArrayList<>(graph.getNodes());
 
         Node to = graph.getNodeById(toId);
         Node from = graph.getNodeById(fromId);
+        Path ret = new Path(from,to);
 
+        ArrayList<Node> visited = new ArrayList<>();
         from.setDistanceValue(0);
-        visited.add(from);
+        MinHeap<Node> unvisited= new MinHeap<>(graph.getNodes());
 
-
+        while (!unvisited.isEmpty()){
+            Node current = unvisited.pop();
+            if(current.getDistanceValue()==Integer.MAX_VALUE) // unreachable
+                return ret;
+            visited.add(current);
+            var neighbours = current.getAllNeighbours();
+            for (Node neighbour : neighbours) {
+                int val =neighbour.getDistanceValue();
+                Edge smallestEdgeTo = current.getSmallestEdgeTo(neighbour);
+                double newVal = smallestEdgeTo.getValue() + current.getDistanceValue();
+                if(val > newVal){
+                    neighbour.setDistanceValue((int) newVal);
+                    ret.addStep(current,neighbour,smallestEdgeTo);
+                }
+                int index = unvisited.indexOf(neighbour);
+                unvisited.swim(index);
+            }
+        }
         return ret;
     }
 
     public static Path aStar(Graph graph, int fromId, int toId) {
-        Path ret = new Path();
+        Node to = graph.getNodeById(toId);
+        Node from = graph.getNodeById(fromId);
+        Path ret = new Path(from,to);
+
 
         return ret;
     }

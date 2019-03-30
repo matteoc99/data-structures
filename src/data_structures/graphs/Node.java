@@ -3,9 +3,8 @@ package data_structures.graphs;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class Node implements Comparable{
+public class Node implements Comparable<Node> {
 
     private Graph parent;
     private ArrayList<Edge> edges;
@@ -18,7 +17,7 @@ public class Node implements Comparable{
     private int distanceValue = Integer.MAX_VALUE;
 
     public Node(Graph parent, int id) {
-        this(parent, (int)(Math.random() * 100), (int)(Math.random() * 100), id);
+        this(parent, (int) (Math.random() * 100), (int) (Math.random() * 100), id);
     }
 
     Node(Graph parent, int x, int y, int id) {
@@ -123,15 +122,34 @@ public class Node implements Comparable{
 
     public Edge getEdgeTo(Node neighbour) {
         for (Edge edge : edges) {
-            if(edge.getOtherNode(this).equals(neighbour))
+            if (edge.getOtherNode(this).equals(neighbour))
                 return edge;
         }
         return null;
     }
 
-    @Override
-    public int compareTo(Object o) {
-        Node other= (Node)o;
-        return this.getDistanceValue()-other.getDistanceValue();
+    public Edge getSmallestEdgeTo(Node neighbour) {
+        int valSmall = Integer.MAX_VALUE;
+        int index = -1;
+        int i = 0;
+        for (Edge edge : edges) {
+            if (edge.getOtherNode(this).equals(neighbour)) {
+                if (edge.getValue() < valSmall) {
+                    index = i;
+                    valSmall = (int) edge.getValue();
+                }
+            }
+            i++;
+        }
+        if (index > -1)
+            return edges.get(index);
+        return null;
     }
+
+    @Override
+    public int compareTo(Node o) {
+        return this.getDistanceValue() - o.getDistanceValue();
+    }
+
+
 }

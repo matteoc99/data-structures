@@ -7,40 +7,59 @@ public class MinHeap<T extends Comparable<T>> {
 
     private ArrayList<T> comparables = new ArrayList<>();
 
+    public MinHeap() {
+    }
+
+    public MinHeap(ArrayList<T> comparables) {
+        init(comparables);
+    }
+
     public T pop() {
-        if(comparables.size()==0)return null;
+        if (comparables.size() == 0) return null;
         swap(0, comparables.size() - 1);
         T ret = deleteLast();
-        resortAfterFromAbove(0);
+        sink(0);
 
         return ret;
     }
 
+    public T peek() {
+        if (comparables.size() == 0) return null;
+        return comparables.get(0);
+    }
+
     public void push(T comparable) {
         comparables.add(comparable);
-        resortAfterFromBelow(comparables.size() - 1);
+        swim(comparables.size() - 1);
     }
 
     public void init(ArrayList<T> comparables) {
-
         this.comparables.clear();
         for (T comparable : comparables) {
             push(comparable);
         }
     }
 
-    private void resortAfterFromBelow(int child) {
-        if (child == 0)
+    public boolean isEmpty() {
+        return comparables.isEmpty();
+    }
+
+    public int indexOf(T t) {
+        return comparables.indexOf(t);
+    }
+
+    public void swim(int child) {
+        if (child <= 0)
             return;
         int parent = (child - 1) / 2;
 
         if (comparables.get(child).compareTo(comparables.get(parent)) < 0) {
             swap(child, parent);
         }
-        resortAfterFromBelow(parent);
+        swim(parent);
     }
 
-    private void resortAfterFromAbove(int root) {
+    public void sink(int root) {
         if (hasleftChild(root) && hasrightChild(root)) {
             int left = root * 2 + 1;
             int right = root * 2 + 2;
@@ -51,11 +70,11 @@ public class MinHeap<T extends Comparable<T>> {
             if (rootComp.compareTo(minComp) > 0) {
                 if (leftComp.compareTo(minComp) == 0) {
                     swap(root, left);
-                    resortAfterFromAbove(left);
+                    sink(left);
                 }
                 if (rightComp.compareTo(minComp) == 0) {
                     swap(root, right);
-                    resortAfterFromAbove(right);
+                    sink(right);
                 }
             }
 
@@ -66,7 +85,7 @@ public class MinHeap<T extends Comparable<T>> {
             if (rootComp.compareTo(leftComp) > 0) {
                 swap(root, left);
             }
-            resortAfterFromAbove(left);
+            sink(left);
         }
     }
 
