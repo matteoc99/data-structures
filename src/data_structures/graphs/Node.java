@@ -108,4 +108,12 @@ public class Node {
     void registerEdge(Edge edge) {
         edges.add(edge);
     }
+
+    public Edge getEdgeTo(Node neighbour) {
+        for (Edge edge : edges) {
+            if(edge.getOtherNode(this).equals(neighbour))
+                return edge;
+        }
+        return null;
+    }
 }

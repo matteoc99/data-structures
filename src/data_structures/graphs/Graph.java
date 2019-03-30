@@ -60,7 +60,7 @@ public class Graph {
         }
         System.out.println("Nodes added");
         for (int i = 0; i < numOfEdges; i++) {
-            ret.getRandomNode().connectTo(ret.getRandomNode(),false);
+            ret.getRandomNode().connectTo(ret.getRandomNode());
         }
         System.out.println("Edges added");
         return ret;
