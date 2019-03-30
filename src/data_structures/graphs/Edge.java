@@ -6,18 +6,31 @@ public class Edge {
     private Node to;
     private Node from;
     private boolean directed;
+    private double value; // default: 1
 
     Edge(Node from, Node to) {
         this(from, to, true);
     }
 
     Edge(Node from, Node to, boolean directed) {
+        this(from,to,directed,1);
+    }
+    Edge(Node from, Node to, boolean directed,double value) {
         this.to = to;
         this.from = from;
         this.directed = directed;
+        this.value = value;
         if (!directed)
             to.registerEdge(this);
         from.registerEdge(this);
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
     }
 
     public Node getTo() {
@@ -53,6 +66,7 @@ public class Edge {
     }
 
     public double getCost() {
+
         return Geometry.getDistance(from.getLocation(), to.getLocation());
     }
 

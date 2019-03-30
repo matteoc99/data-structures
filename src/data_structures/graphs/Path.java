@@ -84,4 +84,8 @@ public class Path {
         return ret.toString();
 
     }
+
+    public boolean isEmpty() {
+        return steps.size()==0;
+    }
 }

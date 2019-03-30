@@ -46,11 +46,15 @@ public class Graph {
     }
 
     public Node addNode() {
-        return new Node(this, idCounter.getAndIncrement());
+        return new Node(this, getNextId());
+    }
+
+    public int getNextId() {
+        return idCounter.getAndIncrement();
     }
 
     public Node addNodeAt(Point point) {
-        return new Node(this,point.getX(),point.getY(), idCounter.getAndIncrement());
+        return new Node(this,point.x,point.y, getNextId());
     }
 
     public static Graph generateDefault(int numOfNodes, int numOfEdges) {

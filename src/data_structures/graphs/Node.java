@@ -5,19 +5,23 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Node {
+public class Node implements Comparable{
 
     private Graph parent;
     private ArrayList<Edge> edges;
-    private double x;
-    private double y;
+    private int x;
+    private int y;
     private int id;
+    /**
+     * used by algorithms
+     */
+    private int distanceValue = Integer.MAX_VALUE;
 
-    Node(Graph parent, int id) {
-        this(parent, Math.random() * 100, Math.random() * 100, id);
+    public Node(Graph parent, int id) {
+        this(parent, (int)(Math.random() * 100), (int)(Math.random() * 100), id);
     }
 
-    Node(Graph parent, double x, double y, int id) {
+    Node(Graph parent, int x, int y, int id) {
         this.parent = parent;
         this.x = x;
         this.y = y;
@@ -39,7 +43,7 @@ public class Node {
         return x;
     }
 
-    public void setX(double x) {
+    public void setX(int x) {
         this.x = x;
     }
 
@@ -47,7 +51,7 @@ public class Node {
         return y;
     }
 
-    public void setY(double y) {
+    public void setY(int y) {
         this.y = y;
     }
 
@@ -55,8 +59,16 @@ public class Node {
         return id;
     }
 
+    public int getDistanceValue() {
+        return distanceValue;
+    }
+
+    public void setDistanceValue(int distanceValue) {
+        this.distanceValue = distanceValue;
+    }
+
     public Point getLocation() {
-        return new Point((int) x, (int) y);
+        return new Point(x, y);
     }
 
 
@@ -115,5 +127,11 @@ public class Node {
                 return edge;
         }
         return null;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Node other= (Node)o;
+        return this.getDistanceValue()-other.getDistanceValue();
     }
 }

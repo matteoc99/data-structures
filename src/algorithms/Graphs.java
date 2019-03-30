@@ -6,15 +6,38 @@ import data_structures.graphs.Path;
 import data_structures.graphs.Step;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Graphs {
-    public static Path reachableDFS(Graph graph, int fromId, int toId) {
+    public static Path DFS(Graph graph, int fromId, int toId) {
         Path ret = new Path();
+        Stack<Node> stack = new Stack<>();
+        ArrayList<Node> visited = new ArrayList<>();
+        Node to = graph.getNodeById(toId);
+        Node from = graph.getNodeById(fromId);
+        stack.add(from);
+
+        while (!stack.empty()) {
+            Node current = stack.pop();
+            if (!visited.contains(current)) {
+                visited.add(current);
+                var neighbours = current.getAllNeighbours();
+                for (Node neighbour : neighbours) {
+                    if (!visited.contains(neighbour)) {
+                        stack.push(neighbour);
+                        ret.addStep(new Step(current, neighbour, current.getEdgeTo(neighbour)));
+                        if (neighbour.equals(to)) {
+                            return ret;
+                        }
+                    }
+                }
+            }
+        }
 
         return ret;
     }
 
-    public static boolean isReachableBFS(Graph graph, int fromId, int toId) {
+    public static boolean isReachableWithBFS(Graph graph, int fromId, int toId) {
         Path ret = new Path();
         ArrayList<Node> queue = new ArrayList<>();
         ArrayList<Node> visited = new ArrayList<>();
@@ -24,14 +47,15 @@ public class Graphs {
 
         while (!queue.isEmpty()) {
             Node current = queue.remove(0);
-            if(current.equals(to)) {
-                return true;
-            }
+
             visited.add(current);
             ArrayList<Node> allNeighbours = current.getAllNeighbours();
             for (Node neighbour : allNeighbours) {
-                if(!visited.contains(neighbour)){
+                if (!visited.contains(neighbour)) {
                     queue.add(neighbour);
+                    if (neighbour.equals(to)) {
+                        return true;
+                    }
                 }
             }
 
@@ -50,16 +74,14 @@ public class Graphs {
 
         while (!queue.isEmpty()) {
             Node current = queue.remove(0);
-            if(current.equals(to)) {
-                return ret;
-            }
+
             visited.add(current);
             ArrayList<Node> allNeighbours = current.getAllNeighbours();
             for (Node neighbour : allNeighbours) {
-                if(!visited.contains(neighbour)){
+                if (!visited.contains(neighbour)) {
                     queue.add(neighbour);
-                    ret.addStep(new Step(current, neighbour,current.getEdgeTo(neighbour)));
-                    if(neighbour.equals(to)) {
+                    ret.addStep(new Step(current, neighbour, current.getEdgeTo(neighbour)));
+                    if (neighbour.equals(to)) {
                         return ret;
                     }
                 }
@@ -67,8 +89,17 @@ public class Graphs {
         }
         return ret;
     }
-    public static Path djikstra(Graph graph, int fromId, int toId) {
+
+    public static Path dijkstra(Graph graph, int fromId, int toId) {
         Path ret = new Path();
+        ArrayList<Node> visited = new ArrayList<>();
+        ArrayList<Node> unvisited= new ArrayList<>(graph.getNodes());
+
+        Node to = graph.getNodeById(toId);
+        Node from = graph.getNodeById(fromId);
+
+        from.setDistanceValue(0);
+        visited.add(from);
 
 
         return ret;
