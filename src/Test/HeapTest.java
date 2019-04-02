@@ -1,15 +1,17 @@
 package Test;
 
+import algorithms.Sort;
 import data_structures.MinHeap;
 import data_structures.graphs.Graph;
 import data_structures.graphs.Node;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class HeapTest {
     public static void main(String[] args) {
-        int[] vals = {12, 3, 24, 1, 33, 2, 12, 3, 46, 35};
-        ArrayList<Integer> ints = new ArrayList<>();
+        int[] vals = {1,4,3,510,12,11,1,2,13,3,14,5,23};
+        ArrayList<Comparable> ints = new ArrayList<>();
 
         for (int val : vals) {
             Integer i = val;
@@ -18,45 +20,9 @@ public class HeapTest {
 
         Integer i1 = 4;
         Integer i2 = 44;
-
-        MinHeap<Integer> heap = new MinHeap<>();
-        heap.init(ints);
-        System.out.println(heap);
-        System.out.println(heap.pop());
-        System.out.println(heap);
-        System.out.println(heap.pop());
-        System.out.println(heap);
-        heap.push(i1);
-        System.out.println(heap);
-        heap.push(i2);
-        System.out.println(heap);
-        System.out.println(heap.pop());
-        System.out.println(heap);
-        System.out.println(heap.pop());
-        System.out.println(heap);
-        System.out.println(heap.pop());
-        System.out.println(heap);
-        System.out.println(heap.pop());
-        System.out.println(heap);
-        heap.push(54);
-        System.out.println(heap);
-        System.out.println(heap.pop());
-        System.out.println(heap);
-        System.out.println(heap.pop());
-        System.out.println(heap);
-        System.out.println(heap.pop());
-        System.out.println(heap);
-        System.out.println(heap.pop());
-        System.out.println(heap);
-        System.out.println(heap.pop());
-        System.out.println(heap);
-        System.out.println(heap.pop());
-        System.out.println(heap);
-        System.out.println(heap.pop());
-        System.out.println(heap);
-        System.out.println(heap.pop());
-        System.out.println(heap);
-        System.out.println(heap.pop());
+        Sort.quickSort(ints);
+        System.out.println(ints);
 
     }
+
 }

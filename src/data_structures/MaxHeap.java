@@ -3,14 +3,14 @@ package data_structures;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class MinHeap<T extends Comparable<T>> {
+public class MaxHeap<T extends Comparable<T>> {
 
     private ArrayList<T> comparables = new ArrayList<>();
 
-    public MinHeap() {
+    public MaxHeap() {
     }
 
-    public MinHeap(ArrayList<T> comparables) {
+    public MaxHeap(ArrayList<T> comparables) {
         init(comparables);
     }
 
@@ -58,7 +58,7 @@ public class MinHeap<T extends Comparable<T>> {
             return;
         int parent = (child - 1) / 2;
 
-        if (comparables.get(child).compareTo(comparables.get(parent)) < 0) {
+        if (comparables.get(child).compareTo(comparables.get(parent)) > 0) {
             swap(child, parent);
         }
         swim(parent);
@@ -71,13 +71,13 @@ public class MinHeap<T extends Comparable<T>> {
             var leftComp = comparables.get(left);
             var rightComp = comparables.get(right);
             var rootComp = comparables.get(root);
-            var minComp = min(leftComp, rightComp);
-            if (rootComp.compareTo(minComp) > 0) {
-                if (leftComp.compareTo(minComp) == 0) {
+            var maxComp = max(leftComp, rightComp);
+            if (rootComp.compareTo(maxComp) < 0) {
+                if (leftComp.compareTo(maxComp) == 0) {
                     swap(root, left);
                     sink(left);
                 }
-                if (rightComp.compareTo(minComp) == 0) {
+                if (rightComp.compareTo(maxComp) == 0) {
                     swap(root, right);
                     sink(right);
                 }
@@ -87,15 +87,15 @@ public class MinHeap<T extends Comparable<T>> {
             int left = root * 2 + 1;
             var leftComp = comparables.get(left);
             var rootComp = comparables.get(root);
-            if (rootComp.compareTo(leftComp) > 0) {
+            if (rootComp.compareTo(leftComp) < 0) {
                 swap(root, left);
             }
             sink(left);
         }
     }
 
-    private T min(T c1, T c2) {
-        if (c1.compareTo(c2) <= 0)
+    private T max(T c1, T c2) {
+        if (c1.compareTo(c2) >= 0)
             return c1;
         return c2;
 
