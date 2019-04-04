@@ -1,4 +1,4 @@
-package data_structures.ai.network;
+package data_structures.nn.network;
 
 /**
  * Collection of useful functions for the Library

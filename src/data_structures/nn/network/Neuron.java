@@ -1,4 +1,4 @@
-package data_structures.ai.network;
+package data_structures.nn.network;
 
 
 import java.util.ArrayList;
@@ -221,6 +221,17 @@ public class Neuron {
             return false;
         return true;
     }
+
+    /**
+     * connects a neuron to every other neuron in a layer randomly
+     * @param layer
+     */
+    public void connectToLayer(Layer layer) {
+        for (int i = 0; i < layer.getNeuronCount(); i++) {
+            Connection connection = new Connection(this,layer.getNeuronAt(i));
+        }
+    }
+
 
     /**
      * @param s {@link Connection} to add

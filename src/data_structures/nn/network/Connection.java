@@ -1,4 +1,4 @@
-package data_structures.ai.network;
+package data_structures.nn.network;
 
 /**
  * An network.Connection is a connection between two {@link Neuron} with a specific weight

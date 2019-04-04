@@ -1,9 +1,9 @@
-package data_structures.ai.network_gui;
+package data_structures.nn.network_gui;
 
 
-import data_structures.ai.network.Layer;
-import data_structures.ai.network.Network;
-import data_structures.ai.network.Neuron;
+import data_structures.nn.network.Layer;
+import data_structures.nn.network.Network;
+import data_structures.nn.network.Neuron;
 
 import javax.swing.*;
 import javax.swing.border.*;

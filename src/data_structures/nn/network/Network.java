@@ -1,4 +1,4 @@
-package data_structures.ai.network;
+package data_structures.nn.network;
 
 import java.util.ArrayList;
 

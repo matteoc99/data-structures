@@ -2,12 +2,14 @@ package implementations.flappy_bird.flappyBirdTrainer;
 
 
 
-import data_structures.ai.network.Network;
-import data_structures.ai.network_gui.NetworkGUI;
+import data_structures.nn.network.Network;
+import data_structures.nn.network_gui.NetworkGUI;
 import implementations.flappy_bird.agent.cosi.CosiAgent;
 import implementations.flappy_bird.flappyBirdGUI.PlayGround;
 
 import java.util.ArrayList;
+
+import static data_structures.nn.network.Utils.crossOver;
 
 /**
  * @author Matteo Cosi
@@ -28,7 +30,7 @@ public class PopulationOrganizer {
                 for (int j = 0; j < population; j++) {
                     if (i == 0) {
                         //first generation
-                        int hiddAmm = (int) (Math.random() * 3)+1;
+                        int hiddAmm = (int) (Math.random() * 2)+1;
                         int[] hidd = new int[hiddAmm];
                         for (int k = 0; k < hiddAmm; k++) {
                             hidd[k] = (int) (Math.random() * 7 + 1);
@@ -44,8 +46,16 @@ public class PopulationOrganizer {
                             }
                             agent[j] = new CosiAgent(new Network(3, 1, hiddAmm, hidd));
                         } else if ((neu == (int) (Math.random() * 6)) && goodParents.size() > 1) {
-                            agent[j] = new CosiAgent(new Network(goodParents.get((int) (Math.random() * goodParents.size()))));
-                            agent[j].getNet().mutateSoft(neu, 0.2);
+                            agent[j] = new CosiAgent(new Network(
+                                    crossOver(goodParents.get((int) (Math.random() * goodParents.size())),goodParents.get((int) (Math.random() * goodParents.size())))[0]
+                            ));
+                            j++;
+                            if(j<population) {
+                                agent[j] = new CosiAgent(new Network(
+                                        crossOver(goodParents.get((int) (Math.random() * goodParents.size())), goodParents.get((int) (Math.random() * goodParents.size())))[1]
+                                ));
+                                agent[j].getNet().mutateSoft(neu, 0.2);
+                            }
                         } else {
                             agent[j] = new CosiAgent(new Network(bestDescriptor));
                             agent[j].getNet().mutateSoft(neu, 0.2);

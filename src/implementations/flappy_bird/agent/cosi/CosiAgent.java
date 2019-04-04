@@ -1,7 +1,7 @@
 package implementations.flappy_bird.agent.cosi;
 
 
-import data_structures.ai.network.Network;
+import data_structures.nn.network.Network;
 import implementations.flappy_bird.agent.Agent;
 
 /**

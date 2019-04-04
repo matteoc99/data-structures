@@ -1,4 +1,4 @@
-package data_structures.ai.network_gui;
+package data_structures.nn.network_gui;
 
 import java.awt.*;
 

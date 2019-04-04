@@ -1,4 +1,4 @@
-package data_structures.ai.network;
+package data_structures.nn.network;
 
 
 import java.util.ArrayList;
@@ -180,6 +180,13 @@ public class Layer {
                 double rand = Math.random() * 2 - 1;
                 Connection con = new Connection(from, to, rand, true);
             }
+        }
+    }
+
+    public void connectWith(Neuron neuron) {
+        for (int i = 0; i < neurons.size(); i++) {
+            Neuron from = neurons.get(i);
+                Connection con = new Connection(from, neuron);
         }
     }
 

@@ -1,8 +1,8 @@
-package data_structures.ai.network_gui;
+package data_structures.nn.network_gui;
 
 
 
-import data_structures.ai.network.Connection;
+import data_structures.nn.network.Connection;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
